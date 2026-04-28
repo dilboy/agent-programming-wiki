@@ -153,6 +153,55 @@ AutoGen 中最需要警惕的反模式是"禁用 Docker 代码执行隔离"。Au
 
 另一个关键问题是"GroupChat 未设置 max_round"。AutoGen 的群聊机制依赖 Agent 间的对话轮次来推进任务，但 LLM 可能陷入无意义的循环对话（如两个 Agent 互相说"请继续"）。没有 `max_round` 兜底，这种循环会持续消耗 token 费用直到账户余额耗尽或手动中断。建议将 `max_round` 设置为合理上限（通常 10-20 轮足够），并在 system_message 中明确要求 Agent 在任务完成时输出终止信号。
 
+## 权衡分析
+
+选择 AutoGen 的核心权衡是**对话驱动的多 Agent 协作 vs 执行控制的精细度**。
+
+### AutoGen vs CrewAI vs LangGraph
+
+| 维度 | AutoGen | CrewAI | LangGraph |
+|------|---------|--------|-----------|
+| 协作模型 | 对话驱动 | 角色-任务驱动 | 图编排 |
+| 代码执行 | 内置（Docker 隔离） | 需外部集成 | 需外部集成 |
+| 群聊管理 | 内置 GroupChat | 无（Sequential/Hierarchical） | 需自行构建 |
+| 发言顺序控制 | 中（speaker_selection_method） | 高（Task 依赖） | 完全可控 |
+| 人机协作 | 内置 human_input_mode | 有限 | 内置 interrupt |
+| 生产就绪度 | 中（部署文档少） | 中 | 高（LangChain 生态） |
+
+### 对话驱动 vs 任务驱动
+
+- **对话驱动（AutoGen）**：Agent 通过自然语言对话协作，更接近人类团队工作方式，但对话质量高度依赖 System Message 设计，且难以精确控制执行顺序
+- **任务驱动（CrewAI）**：明确定义任务依赖关系，执行流程可预测，但灵活性较低，不适合需要动态调整的场景
+- **图驱动（LangGraph）**：最精细的控制，但抽象层级最高，学习成本最大
+
+### 代码执行安全的取舍
+
+- **Docker 隔离**：最安全，但增加部署复杂度和冷启动延迟
+- **虚拟环境隔离**：中等安全性，配置简单，但仍可访问宿主机资源
+- **无隔离**：最简单，但风险极高——LLM 生成的任意代码都可以执行
+- **经验法则**：开发阶段可用虚拟环境，生产环境必须用 Docker
+
+### GroupChat 的控制力问题
+
+- AutoGen 的 GroupChat 让 Agent 自然对话，但**发言顺序不可精确预测**
+- `speaker_selection_method="auto"` 让 LLM 决定下一个发言者——灵活但不确定
+- `speaker_selection_method="round_robin"` 强制轮流发言——可预测但不灵活
+- 需要精确控制执行顺序时，GroupChat 不是最佳选择——考虑 CrewAI 的 Task 依赖或 LangGraph 的图编排
+
+### 何时选择 AutoGen
+
+- 需要**多 Agent 通过对话协作**（如头脑风暴、辩论、代码审查）
+- 需要**内置代码执行能力**且不想额外集成
+- 项目偏好**微软生态和 Azure 集成**
+- 需要**灵活的人机协作模式**
+
+### 何时避免 AutoGen
+
+- 需要**精确控制执行顺序**——CrewAI 的 Task 依赖或 LangGraph 的图更合适
+- 对**生产部署成熟度有高要求**——AutoGen 的部署文档相对较少
+- 工作流**不需要对话交互**——直接用 LangChain Chain 更简单
+- 需要**与 LangChain 生态深度集成**——AutoGen 的集成层较弱
+
 ## 最佳实践
 
 1. **System Message 设计**：清晰的角色定义是群聊效果的关键
