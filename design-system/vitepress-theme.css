@@ -1,0 +1,530 @@
+/**
+ * Agent 编程 Wiki — VitePress 自定义主题
+ * 基于 VitePress 默认主题覆盖
+ * 兼容暗色/亮色双模式
+ */
+
+/* ============================================
+   基础变量
+   ============================================ */
+
+:root {
+  /* ---- 字体 ---- */
+  --vp-font-family-base: "Inter", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --vp-font-family-mono: "JetBrains Mono", "Fira Code", "SF Mono", "Noto Sans Mono CJK SC", monospace;
+
+  /* ---- 中文排版优化 ---- */
+  --vp-c-text-chinese-spacing: 0.02em;
+  --vp-c-text-line-height: 1.75;
+  --vp-c-paragraph-spacing: 1.5em;
+
+  /* ---- 圆角 ---- */
+  --vp-border-radius: 8px;
+  --vp-border-radius-lg: 12px;
+}
+
+/* ============================================
+   亮色模式（默认）
+   ============================================ */
+
+:root {
+  /* ---- 品牌色 ---- */
+  --vp-c-brand-1: #2563EB;
+  --vp-c-brand-2: #3B82F6;
+  --vp-c-brand-3: #60A5FA;
+  --vp-c-brand-soft: rgba(37, 99, 235, 0.14);
+
+  /* ---- 强调色 ---- */
+  --vp-c-accent-1: #059669;
+  --vp-c-accent-2: #10B981;
+  --vp-c-accent-3: #34D399;
+  --vp-c-accent-soft: rgba(5, 150, 105, 0.14);
+
+  /* ---- 警告/错误 ---- */
+  --vp-c-warning-1: #D97706;
+  --vp-c-warning-2: #F59E0B;
+  --vp-c-warning-3: #FBBF24;
+  --vp-c-warning-soft: rgba(217, 119, 6, 0.14);
+
+  --vp-c-danger-1: #DC2626;
+  --vp-c-danger-2: #EF4444;
+  --vp-c-danger-3: #F87171;
+  --vp-c-danger-soft: rgba(220, 38, 38, 0.14);
+
+  /* ---- 文本色 ---- */
+  --vp-c-text-1: #0F172A;
+  --vp-c-text-2: #334155;
+  --vp-c-text-3: #64748B;
+
+  /* ---- 背景色 ---- */
+  --vp-c-bg: #FFFFFF;
+  --vp-c-bg-alt: #F8FAFC;
+  --vp-c-bg-elv: #FFFFFF;
+  --vp-c-bg-soft: #F1F5F9;
+
+  /* ---- 边框 ---- */
+  --vp-c-border: #E2E8F0;
+  --vp-c-divider: #F1F5F9;
+  --vp-c-gutter: #E2E8F0;
+
+  /* ---- 代码块 ---- */
+  --vp-c-code-bg: #F1F5F9;
+  --vp-c-code-text: #334155;
+  --vp-c-code-border: #E2E8F0;
+  --vp-c-code-dimm: #94A3B8;
+  --vp-c-code-keyword: #CF222E;
+  --vp-c-code-string: #0A3069;
+  --vp-c-code-number: #0550AE;
+  --vp-c-code-function: #8250DF;
+  --vp-c-code-class: #953800;
+  --vp-c-code-variable: #24292F;
+  --vp-c-code-operator: #CF222E;
+  --vp-c-code-comment: #6E7781;
+
+  /* ---- VitePress 官方变量映射 ---- */
+  --vp-c-brand: var(--vp-c-brand-1);
+  --vp-c-brand-light: var(--vp-c-brand-2);
+  --vp-c-brand-lighter: var(--vp-c-brand-3);
+  --vp-c-brand-dark: #1D4ED8;
+  --vp-c-brand-darker: #1E40AF;
+
+  --vp-c-tip-1: var(--vp-c-accent-1);
+  --vp-c-tip-2: var(--vp-c-accent-2);
+  --vp-c-tip-3: var(--vp-c-accent-3);
+  --vp-c-tip-soft: var(--vp-c-accent-soft);
+
+  --vp-c-warning-1: var(--vp-c-warning-1);
+  --vp-c-warning-2: var(--vp-c-warning-2);
+  --vp-c-warning-3: var(--vp-c-warning-3);
+  --vp-c-warning-soft: var(--vp-c-warning-soft);
+
+  --vp-c-danger-1: var(--vp-c-danger-1);
+  --vp-c-danger-2: var(--vp-c-danger-2);
+  --vp-c-danger-3: var(--vp-c-danger-3);
+  --vp-c-danger-soft: var(--vp-c-danger-soft);
+}
+
+/* ============================================
+   暗色模式
+   ============================================ */
+
+.dark {
+  /* ---- 品牌色 ---- */
+  --vp-c-brand-1: #60A5FA;
+  --vp-c-brand-2: #93C5FD;
+  --vp-c-brand-3: #BFDBFE;
+  --vp-c-brand-soft: rgba(96, 165, 250, 0.16);
+
+  /* ---- 强调色 ---- */
+  --vp-c-accent-1: #34D399;
+  --vp-c-accent-2: #6EE7B7;
+  --vp-c-accent-3: #A7F3D0;
+  --vp-c-accent-soft: rgba(52, 211, 153, 0.16);
+
+  /* ---- 警告/错误 ---- */
+  --vp-c-warning-1: #FBBF24;
+  --vp-c-warning-2: #FCD34D;
+  --vp-c-warning-3: #FDE68A;
+  --vp-c-warning-soft: rgba(251, 191, 36, 0.16);
+
+  --vp-c-danger-1: #F87171;
+  --vp-c-danger-2: #FCA5A5;
+  --vp-c-danger-3: #FECACA;
+  --vp-c-danger-soft: rgba(248, 113, 113, 0.16);
+
+  /* ---- 文本色 ---- */
+  --vp-c-text-1: #F8FAFC;
+  --vp-c-text-2: #CBD5E1;
+  --vp-c-text-3: #94A3B8;
+
+  /* ---- 背景色 ---- */
+  --vp-c-bg: #0F172A;
+  --vp-c-bg-alt: #1E293B;
+  --vp-c-bg-elv: #1E293B;
+  --vp-c-bg-soft: #334155;
+
+  /* ---- 边框 ---- */
+  --vp-c-border: #334155;
+  --vp-c-divider: #1E293B;
+  --vp-c-gutter: #334155;
+
+  /* ---- 代码块 ---- */
+  --vp-c-code-bg: #1E293B;
+  --vp-c-code-text: #E2E8F0;
+  --vp-c-code-border: #334155;
+  --vp-c-code-dimm: #64748B;
+  --vp-c-code-keyword: #FF7B72;
+  --vp-c-code-string: #A5D6FF;
+  --vp-c-code-number: #79C0FF;
+  --vp-c-code-function: #D2A8FF;
+  --vp-c-code-class: #FFA657;
+  --vp-c-code-variable: #C9D1D9;
+  --vp-c-code-operator: #FF7B72;
+  --vp-c-code-comment: #8B949E;
+
+  /* ---- VitePress 官方变量映射 ---- */
+  --vp-c-brand: var(--vp-c-brand-1);
+  --vp-c-brand-light: var(--vp-c-brand-2);
+  --vp-c-brand-lighter: var(--vp-c-brand-3);
+  --vp-c-brand-dark: #3B82F6;
+  --vp-c-brand-darker: #2563EB;
+}
+
+/* ============================================
+   布局覆盖
+   ============================================ */
+
+/* 最大内容宽度 — 中文阅读舒适度 */
+.VPDoc .content-container {
+  max-width: 720px;
+}
+
+/* 侧边栏宽度 */
+:root {
+  --vp-sidebar-width: 280px;
+}
+
+/* ============================================
+   排版覆盖
+   ============================================ */
+
+/* 中文正文优化 */
+.VPDoc p,
+.VPDoc li,
+.VPDoc td {
+  letter-spacing: var(--vp-c-text-chinese-spacing);
+  line-height: var(--vp-c-text-line-height);
+}
+
+/* 段落间距 */
+.VPDoc p {
+  margin-bottom: var(--vp-c-paragraph-spacing);
+}
+
+/* 标题字间距微调 */
+.VPDoc h1 {
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.VPDoc h2 {
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin-top: 2.5rem;
+}
+
+.VPDoc h3 {
+  line-height: 1.4;
+  margin-top: 2rem;
+}
+
+.VPDoc h4 {
+  line-height: 1.5;
+  margin-top: 1.5rem;
+}
+
+/* ============================================
+   链接样式
+   ============================================ */
+
+.VPDoc a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.VPDoc a:hover {
+  border-bottom-color: var(--vp-c-brand);
+}
+
+/* ============================================
+   代码块样式
+   ============================================ */
+
+/* 内联代码 */
+:VPDoc code:not(pre code) {
+  background-color: var(--vp-c-code-bg);
+  color: var(--vp-c-code-text);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  border: 1px solid var(--vp-c-code-border);
+}
+
+/* 代码块容器 */
+.VPDoc div[class*="language-"] {
+  border-radius: var(--vp-border-radius);
+  border: 1px solid var(--vp-c-code-border);
+  background-color: var(--vp-c-code-bg);
+}
+
+/* 代码块内文字 */
+.VPDoc div[class*="language-"] code {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* 代码块复制按钮 */
+.VPDoc div[class*="language-"] .copy {
+  border-radius: 6px;
+  border: 1px solid var(--vp-c-border);
+  background-color: var(--vp-c-bg);
+}
+
+/* ============================================
+   语法高亮覆盖
+   ============================================ */
+
+/* 通用 token 颜色映射 */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--vp-c-code-comment);
+}
+
+.token.keyword,
+.token.operator,
+.token.tag,
+.token.selector {
+  color: var(--vp-c-code-keyword);
+}
+
+.token.string,
+.token.attr-value,
+.token.regex {
+  color: var(--vp-c-code-string);
+}
+
+.token.number,
+.token.boolean {
+  color: var(--vp-c-code-number);
+}
+
+.token.function,
+.token.method {
+  color: var(--vp-c-code-function);
+}
+
+.token.class-name,
+.token.type,
+.token.interface {
+  color: var(--vp-c-code-class);
+}
+
+.token.variable,
+.token.property,
+.token.parameter {
+  color: var(--vp-c-code-variable);
+}
+
+/* ============================================
+   自定义容器（Callout）
+   ============================================ */
+
+/* Info */
+.custom-block.info {
+  border-color: var(--vp-c-brand-1);
+  background-color: var(--vp-c-brand-soft);
+}
+
+.custom-block.info .custom-block-title {
+  color: var(--vp-c-brand-1);
+}
+
+/* Tip */
+.custom-block.tip {
+  border-color: var(--vp-c-accent-1);
+  background-color: var(--vp-c-accent-soft);
+}
+
+.custom-block.tip .custom-block-title {
+  color: var(--vp-c-accent-1);
+}
+
+/* Warning */
+.custom-block.warning {
+  border-color: var(--vp-c-warning-1);
+  background-color: var(--vp-c-warning-soft);
+}
+
+.custom-block.warning .custom-block-title {
+  color: var(--vp-c-warning-1);
+}
+
+/* Danger */
+.custom-block.danger {
+  border-color: var(--vp-c-danger-1);
+  background-color: var(--vp-c-danger-soft);
+}
+
+.custom-block.danger .custom-block-title {
+  color: var(--vp-c-danger-1);
+}
+
+/* 统一圆角 */
+.custom-block {
+  border-radius: var(--vp-border-radius);
+  border-left-width: 4px;
+}
+
+/* ============================================
+   表格样式
+   ============================================ */
+
+.VPDoc table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--vp-border-radius);
+  border: 1px solid var(--vp-c-border);
+  overflow: hidden;
+}
+
+.VPDoc th {
+  background-color: var(--vp-c-bg-alt);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--vp-c-border);
+}
+
+.VPDoc td {
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.VPDoc tr:last-child td {
+  border-bottom: none;
+}
+
+.VPDoc tr:hover td {
+  background-color: var(--vp-c-bg-soft);
+}
+
+/* ============================================
+   导航与侧边栏
+   ============================================ */
+
+/* 侧边栏菜单 */
+.VPSidebar {
+  background-color: var(--vp-c-bg-alt);
+  border-right: 1px solid var(--vp-c-border);
+}
+
+/* 当前选中项 */
+.VPSidebarItem.is-active .link {
+  color: var(--vp-c-brand);
+  font-weight: 600;
+}
+
+.VPSidebarItem.is-active .link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 16px;
+  background-color: var(--vp-c-brand);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ============================================
+   首页 Hero 区域
+   ============================================ */
+
+.VPHero .name {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.VPHero .text {
+  color: var(--vp-c-text-2);
+  letter-spacing: var(--vp-c-text-chinese-spacing);
+}
+
+.VPHero .tagline {
+  color: var(--vp-c-text-3);
+  letter-spacing: var(--vp-c-text-chinese-spacing);
+}
+
+/* CTA 按钮 */
+.VPButton.brand {
+  background-color: var(--vp-c-brand);
+  border-color: var(--vp-c-brand);
+}
+
+.VPButton.brand:hover {
+  background-color: var(--vp-c-brand-light);
+  border-color: var(--vp-c-brand-light);
+}
+
+.VPButton.alt {
+  border-color: var(--vp-c-border);
+  color: var(--vp-c-text-1);
+}
+
+.VPButton.alt:hover {
+  border-color: var(--vp-c-brand);
+  color: var(--vp-c-brand);
+}
+
+/* ============================================
+   搜索框
+   ============================================ */
+
+.DocSearch-Button {
+  border-radius: var(--vp-border-radius);
+  border: 1px solid var(--vp-c-border);
+  background-color: var(--vp-c-bg-alt);
+}
+
+.DocSearch-Button:hover {
+  border-color: var(--vp-c-brand);
+  box-shadow: 0 0 0 2px var(--vp-c-brand-soft);
+}
+
+/* ============================================
+   滚动条美化
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--vp-c-text-3);
+  border-radius: 4px;
+  opacity: 0.3;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--vp-c-text-2);
+}
+
+/* ============================================
+   打印样式
+   ============================================ */
+
+@media print {
+  .VPNav,
+  .VPSidebar,
+  .VPDocAside,
+  .VPFooter {
+    display: none !important;
+  }
+
+  .VPDoc {
+    padding: 0 !important;
+  }
+
+  .VPDoc .content-container {
+    max-width: 100% !important;
+  }
+}

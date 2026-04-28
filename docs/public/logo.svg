@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40">
+  <defs>
+    <style>
+      .logo-text { font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; }
+      .logo-accent { fill: #2563EB; }
+      .logo-neutral { fill: #0F172A; }
+    </style>
+  </defs>
+
+  <!-- 菱形符号 -->
+  <polygon class="logo-accent" points="12,4 22,20 12,36 2,20" transform="translate(0, 0)"/>
+
+  <!-- 内部小菱形（空心效果） -->
+  <polygon fill="white" points="12,10 18,20 12,30 6,20"/>
+  <polygon class="logo-accent" points="12,12 16,20 12,28 8,20"/>
+
+  <!-- AgentWiki 文字 -->
+  <text x="30" y="26" class="logo-text logo-accent" font-size="20">Agent</text>
+  <text x="86" y="26" class="logo-text logo-neutral" font-size="20">Wiki</text>
+</svg>
