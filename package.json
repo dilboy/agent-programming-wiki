@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Agent Programming Wiki - VitePress Static Site",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dilboy/agent-programming-wiki.git"
+  },
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
