@@ -128,6 +128,21 @@ chain = (
 | 文档完善，社区活跃 | 简单任务引入框架过重 |
 | 与 LangGraph 无缝衔接 | 学习曲线较陡 |
 
+## 反模式与修复
+
+| 反模式 | 问题描述 | 影响 | 修复方案 |
+|--------|----------|------|----------|
+| 滥用 AgentExecutor 处理确定性任务 | 对于固定步骤的工作流（如"检索→格式化→生成"）使用 Agent，让 LLM 自行决策每一步 | 每步多一次 LLM 调用，延迟增加 2-5 秒，成本翻倍，且决策可能出错 | 确定性流程用 LCEL Chain（`\|` 管道符），仅在需要动态决策时使用 Agent |
+| LCEL 管道嵌套过深 | 在 `RunnableParallel` 内部再嵌套多层并行和分支，形成难以理解的嵌套结构 | 调试时无法定位失败节点，错误堆栈难以阅读，类型推断失效 | 拆分为多个独立的子 Chain，用有意义的变量名组合，每个 Chain 职责单一 |
+| 忽视 StrOutputParser | 直接使用 LLM 返回的 `AIMessage` 对象作为后续 Chain 的输入，未用 `StrOutputParser` 转换 | 类型不匹配导致下游 Chain 报错、Prompt 模板填充异常、输出格式不可预测 | 在 LLM 后始终添加 `StrOutputParser()` 或对应的结构化解析器，确保类型链路一致 |
+| 硬编码 Prompt 而非使用 Template | 将提示词直接写死在代码中，而非使用 `ChatPromptTemplate` 参数化 | 无法复用 Prompt、无法 A/B 测试不同版本、修改需改代码重新部署 | 使用 `ChatPromptTemplate` 或从 LangSmith Hub 拉取 (`hub.pull()`)，实现 Prompt 版本管理 |
+| 在 Agent 工具中执行阻塞操作 | 工具函数内部执行同步网络请求、大文件处理等耗时操作 | Agent 单步执行超时、整个 Chain 卡住、用户体验极差 | 工具函数使用异步实现（`async def`），或在工具内使用 `RunnableLambda` + `run_in_executor` 包装同步调用 |
+| 不使用 LangSmith 进行链路追踪 | 生产环境未接入 LangSmith，仅依赖 `print` 调试 Chain 执行过程 | 无法追踪多步 Chain 中哪步出错、无法回放失败用例、无法监控延迟和成本 | 启用 LangSmith：设置 `LANGCHAIN_TRACING_V2=true` 环境变量，所有 Chain 自动上报执行轨迹 |
+
+在 LangChain 中，最常见的反模式是"滥用 AgentExecutor 处理确定性任务"。Agent 的核心价值在于让 LLM 自主决策使用哪些工具、按什么顺序执行——但如果你的工作流步骤是固定的（例如"先检索文档，再格式化上下文，最后生成回答"），用 Agent 不仅浪费 LLM 调用次数（每步决策都需要一次推理），还引入了不确定性。正确的做法是用 LCEL 管道符 `|` 将确定性步骤串联为 Chain，仅在步骤需要动态判断时才使用 Agent。
+
+另一个关键反模式是"不使用 LangSmith"。LangChain 的 Chain 往往涉及多个 Runnable 的串联，一旦出错，没有链路追踪几乎无法定位问题。LangSmith 提供了完整的执行可视化、延迟分析和成本统计——设置一个环境变量即可启用，是生产环境的必备组件。
+
 ## 最佳实践
 
 1. **从简单开始**：先用 LCEL 写链，不要过度使用高级抽象

@@ -168,6 +168,21 @@ print(result)
 | 适合团队协作场景 | 生态相对较小 |
 | 任务依赖关系清晰 | 复杂循环工作流支持有限 |
 
+## 反模式与修复
+
+| 反模式 | 问题描述 | 影响 | 修复方案 |
+|--------|----------|------|----------|
+| 角色 backstory 过于笼统 | Agent 定义中 backstory 写成"你是一个专家"，未提供具体的领域知识和行为约束 | Agent 输出缺乏专业性、与无角色定义的裸 LLM 调用无异、角色驱动的优势完全丧失 | backstory 应包含：专业背景、工作风格、输出偏好、禁止行为，如"你是一位有 10 年经验的市场分析师，擅长 SWOT 分析" |
+| expected_output 定义模糊 | Task 的 `expected_output` 写成"一份报告"或"相关内容"，未指定格式和结构 | Agent 输出格式不可预测、下游 Task 无法可靠解析前置输出、每次运行结果差异大 | expected_output 应明确：格式（Markdown/JSON/表格）、结构（必须包含的章节）、长度约束（如"800-1200 字"） |
+| 错误使用 allow_delegation | 为所有 Agent 开启 `allow_delegation=True`，期望 Agent 自动互相委托任务 | Agent 间互相推诿、任务在多个 Agent 间来回传递、执行时间指数增长、最终输出可能遗漏任务 | 仅在 Hierarchical 模式下为 Manager Agent 开启 delegation，Sequential 模式下 Worker Agent 应关闭 delegation |
+| Sequential 模式下 Task 无 context 依赖 | 顺序执行的 Task 未通过 `context=[前置_task]` 声明依赖关系 | 后续 Task 无法获取前置 Task 的输出、每个 Task 独立运行失去协作意义、结果断链 | 明确声明 Task 间的 context 依赖：`Task(..., context=[research_task])`，确保输出链路完整传递 |
+| 单 Crew 中塞入过多 Agent | 将 10+ 个 Agent 放入同一个 Crew，期望一次性完成复杂项目 | Token 消耗爆炸、角色边界模糊、执行时间过长、Manager Agent 难以协调过多角色 | 拆分为多个子 Crew，每个 Crew 聚焦一个子目标；或使用 Hierarchical 模式让 Manager Agent 分批调度 |
+| 未利用 verbose 模式调试 | 开发阶段关闭 `verbose=True`，无法观察 Agent 的推理过程和任务执行细节 | 难以定位输出质量差的原因、无法判断是角色定义问题还是 LLM 能力问题 | 开发和测试阶段始终开启 `verbose=True`，生产环境可关闭但需接入日志系统记录关键决策点 |
+
+CrewAI 中最核心的反模式是"角色 backstory 过于笼统"。CrewAI 的核心价值在于角色驱动——通过精心设计的角色定义（role + goal + backstory）来引导 LLM 的行为。如果 backstory 只是"你是一个专家"，Agent 的表现与直接调用裸 LLM 几乎没有区别，却白白引入了框架开销。有效的 backstory 应该像一份角色说明书：包含专业背景（"你是一位有 10 年经验的数据分析师"）、工作方法（"你习惯先看数据分布再下结论"）、输出偏好（"所有结论必须附带数据表格"）和禁止行为（"不要给出没有数据支撑的猜测"）。
+
+另一个高频问题是"expected_output 定义模糊"。在 Sequential 模式下，每个 Task 的输出会传递给依赖它的下一个 Task。如果 expected_output 不明确，Agent 可能返回一段散文、一个列表或一个表格——下游 Task 的 Agent 无法可靠解析这些不确定格式的输入，导致信息丢失或误解。建议在 expected_output 中明确规定输出的格式（如"Markdown 表格，包含'名称''评分''优劣势'三列"），确保 Task 间的数据传递可靠。
+
 ## 最佳实践
 
 1. **角色精细化**：角色定义要具体，避免笼统描述
