@@ -9,7 +9,7 @@ export default defineConfig({
   srcDir: '.',
   outDir: './.vitepress/dist',
   assetsDir: 'assets',
-  base: '/',
+  base: '/agent-programming-wiki/',
   ignoreDeadLinks: true,
 
   head: [
@@ -37,7 +37,7 @@ export default defineConfig({
     sidebar,
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/your-org/agent-programming-wiki' }
+      { icon: 'github', link: 'https://github.com/dilboy/agent-programming-wiki' }
     ],
 
     search: {
@@ -66,7 +66,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/your-org/agent-programming-wiki/edit/main/docs/:path',
+      pattern: 'https://github.com/dilboy/agent-programming-wiki/edit/main/docs/:path',
       text: '在 GitHub 上编辑此页'
     },
 
