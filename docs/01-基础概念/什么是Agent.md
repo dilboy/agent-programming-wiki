@@ -434,7 +434,7 @@ Agent 系统的成本模型：`Cost = Σ(每步输入Token + 每步输出Token) 
 - [[Agent-vs-工作流|Agent 与工作流的区别]] — 选型决策树与混合模式
 - [[Agent-能力模型]] — 五层能力分层与评估指标
 - [[00-模式总览]] — 8 大核心架构模式速查
-- [[03-核心组件/00-组件总览]] — 核心组件全景图
+- [[00-组件总览]] — 核心组件全景图
 - [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629) — Yao et al., 2022
 - [Intelligent Agents: Theory and Practice](https://www.cs.ox.ac.uk/people/michael.wooldridge/pubs/ker95.pdf) — Wooldridge & Jennings, 1995
 - Russell, S. J., & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach* (4th ed.). Pearson.
