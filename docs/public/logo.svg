@@ -1,20 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40">
   <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="50%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#DB2777"/>
+    </linearGradient>
     <style>
       .logo-text { font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 700; }
-      .logo-accent { fill: #2563EB; }
+      .logo-brand { fill: url(#logoGrad); }
       .logo-neutral { fill: #0F172A; }
+      @media (prefers-color-scheme: dark) {
+        .logo-neutral { fill: #F1F5F9; }
+      }
     </style>
   </defs>
 
-  <!-- 菱形符号 -->
-  <polygon class="logo-accent" points="12,4 22,20 12,36 2,20" transform="translate(0, 0)"/>
+  <!-- 菱形主体 -->
+  <polygon class="logo-brand" points="12,4 22,20 12,36 2,20"/>
 
-  <!-- 内部小菱形（空心效果） -->
-  <polygon fill="white" points="12,10 18,20 12,30 6,20"/>
-  <polygon class="logo-accent" points="12,12 16,20 12,28 8,20"/>
+  <!-- 内部空心层 -->
+  <polygon fill="#FFFFFF" points="12,10 18,20 12,30 6,20"/>
+  <polygon class="logo-brand" points="12,12 16,20 12,28 8,20"/>
 
-  <!-- AgentWiki 文字 -->
-  <text x="30" y="26" class="logo-text logo-accent" font-size="20">Agent</text>
+  <!-- 文字 -->
+  <text x="30" y="26" class="logo-text logo-brand" font-size="20">Agent</text>
   <text x="86" y="26" class="logo-text logo-neutral" font-size="20">Wiki</text>
 </svg>

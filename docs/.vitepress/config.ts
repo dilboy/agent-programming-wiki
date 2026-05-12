@@ -14,7 +14,7 @@ export default defineConfig({
 
   head: [
     ['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }],
-    ['meta', { name: 'theme-color', content: '#2563EB' }],
+    ['meta', { name: 'theme-color', content: '#4F46E5' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'Agent 编程 Wiki' }],
     ['meta', { property: 'og:description', content: '面向开发者的 AI Agent 编程知识库' }],

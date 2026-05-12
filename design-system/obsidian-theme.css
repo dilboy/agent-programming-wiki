@@ -1,287 +1,603 @@
 /**
  * Agent 编程 Wiki — Obsidian 自定义主题片段
- * 与 VitePress 设计系统视觉一致
+ * ----------------------------------------------------------
+ * 与 VitePress 设计系统视觉一致 (Indigo → Violet 品牌色)
  *
- * 使用方法：
- * 1. 打开 Obsidian 设置 → 外观 → CSS 代码片段
- * 2. 新建片段，粘贴此文件内容
- * 3. 启用片段
+ * 使用方法:
+ *   1. 打开 Obsidian → 设置 → 外观 → CSS 代码片段
+ *   2. 点击 "打开代码片段文件夹"，将本文件复制到该文件夹
+ *   3. 回到 Obsidian，启用 "agent-wiki-theme" 片段
+ *
+ * 包含:
+ *   - 品牌色变量覆盖 (亮/暗双模式)
+ *   - 中文长文排版优化
+ *   - Callout / 代码块 / 表格视觉一致
+ *   - 文件树、标签页、状态栏的细节打磨
  */
 
-/* ============================================
-   亮色模式
-   ============================================ */
+/* ============================================================
+   1. 亮色模式 — 设计令牌
+   ============================================================ */
 
 .theme-light {
-  /* 品牌色 */
-  --interactive-accent: #2563EB;
-  --interactive-accent-hover: #3B82F6;
-  --interactive-accent-hsl: 221, 83%, 53%;
+  /* ---- 主品牌 (Indigo) ---- */
+  --interactive-accent: #4F46E5;
+  --interactive-accent-hover: #6366F1;
+  --interactive-accent-hsl: 239, 75%, 58%;
 
-  /* 文本色 */
+  /* ---- 文本 ---- */
   --text-normal: #0F172A;
-  --text-muted: #334155;
-  --text-faint: #64748B;
-  --text-accent: #2563EB;
-  --text-accent-hover: #3B82F6;
+  --text-muted: #475569;
+  --text-faint: #94A3B8;
+  --text-accent: #4F46E5;
+  --text-accent-hover: #6366F1;
+  --text-on-accent: #FFFFFF;
 
-  /* 背景色 */
+  /* ---- 背景层次 ---- */
   --background-primary: #FFFFFF;
-  --background-primary-alt: #F8FAFC;
-  --background-secondary: #F8FAFC;
-  --background-secondary-alt: #F1F5F9;
+  --background-primary-alt: #FAFBFC;
+  --background-secondary: #FAFBFC;
+  --background-secondary-alt: #F4F5F9;
+  --background-modifier-hover: rgba(99, 102, 241, 0.08);
+  --background-modifier-active-hover: rgba(99, 102, 241, 0.12);
 
-  /* 边框 */
-  --background-modifier-border: #E2E8F0;
+  /* ---- 边框 / 分隔 ---- */
+  --background-modifier-border: #E4E7EE;
   --background-modifier-border-hover: #CBD5E1;
-  --background-modifier-border-focus: #2563EB;
+  --background-modifier-border-focus: #6366F1;
 
-  /* 强调 */
-  --background-modifier-success: #D1FAE5;
-  --background-modifier-error: #FEE2E2;
-  --background-modifier-warning: #FEF3C7;
+  /* ---- 状态色 ---- */
+  --background-modifier-success: rgba(16, 185, 129, 0.12);
+  --background-modifier-error: rgba(225, 29, 72, 0.12);
+  --background-modifier-warning: rgba(217, 119, 6, 0.12);
+  --background-modifier-info: rgba(99, 102, 241, 0.10);
+  --background-modifier-message: rgba(139, 92, 246, 0.10);
 
-  /* 滚动条 */
+  --text-success: #047857;
+  --text-error: #BE123C;
+  --text-warning: #B45309;
+
+  /* ---- 选区 ---- */
+  --text-selection: rgba(99, 102, 241, 0.16);
+
+  /* ---- 滚动条 ---- */
   --scrollbar-bg: transparent;
   --scrollbar-thumb-bg: #CBD5E1;
   --scrollbar-active-thumb-bg: #94A3B8;
+
+  /* ---- 阴影 ---- */
+  --shadow-s: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-m:
+    0 2px 4px -1px rgba(15, 23, 42, 0.06),
+    0 4px 12px -2px rgba(15, 23, 42, 0.05);
+  --shadow-l:
+    0 4px 8px -2px rgba(15, 23, 42, 0.08),
+    0 12px 32px -4px rgba(15, 23, 42, 0.08);
+
+  /* ---- 圆角 ---- */
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 14px;
 }
 
-/* ============================================
-   暗色模式
-   ============================================ */
+/* ============================================================
+   2. 暗色模式 — 设计令牌
+   ============================================================ */
 
 .theme-dark {
-  /* 品牌色 */
-  --interactive-accent: #60A5FA;
-  --interactive-accent-hover: #93C5FD;
-  --interactive-accent-hsl: 213, 94%, 68%;
+  /* ---- 主品牌（暗色下抬亮） ---- */
+  --interactive-accent: #A5B4FC;
+  --interactive-accent-hover: #C7D2FE;
+  --interactive-accent-hsl: 230, 94%, 82%;
 
-  /* 文本色 */
-  --text-normal: #F8FAFC;
+  /* ---- 文本 ---- */
+  --text-normal: #F1F5F9;
   --text-muted: #CBD5E1;
   --text-faint: #94A3B8;
-  --text-accent: #60A5FA;
-  --text-accent-hover: #93C5FD;
+  --text-accent: #A5B4FC;
+  --text-accent-hover: #C7D2FE;
+  --text-on-accent: #0B0F1A;
 
-  /* 背景色 */
-  --background-primary: #0F172A;
-  --background-primary-alt: #1E293B;
-  --background-secondary: #1E293B;
-  --background-secondary-alt: #334155;
+  /* ---- 背景层次 ---- */
+  --background-primary: #0B0F1A;
+  --background-primary-alt: #0F1422;
+  --background-secondary: #0F1422;
+  --background-secondary-alt: #1A2036;
+  --background-modifier-hover: rgba(129, 140, 248, 0.10);
+  --background-modifier-active-hover: rgba(129, 140, 248, 0.16);
 
-  /* 边框 */
-  --background-modifier-border: #334155;
-  --background-modifier-border-hover: #475569;
-  --background-modifier-border-focus: #60A5FA;
+  /* ---- 边框 ---- */
+  --background-modifier-border: #232A45;
+  --background-modifier-border-hover: #2F3759;
+  --background-modifier-border-focus: #A5B4FC;
 
-  /* 强调 */
-  --background-modifier-success: #064E3B;
-  --background-modifier-error: #7F1D1D;
-  --background-modifier-warning: #78350F;
+  /* ---- 状态 ---- */
+  --background-modifier-success: rgba(52, 211, 153, 0.16);
+  --background-modifier-error: rgba(251, 113, 133, 0.16);
+  --background-modifier-warning: rgba(251, 191, 36, 0.16);
+  --background-modifier-info: rgba(129, 140, 248, 0.16);
+  --background-modifier-message: rgba(167, 139, 250, 0.16);
 
-  /* 滚动条 */
+  --text-success: #34D399;
+  --text-error: #FB7185;
+  --text-warning: #FCD34D;
+
+  /* ---- 选区 ---- */
+  --text-selection: rgba(129, 140, 248, 0.22);
+
+  /* ---- 滚动条 ---- */
   --scrollbar-bg: transparent;
-  --scrollbar-thumb-bg: #475569;
-  --scrollbar-active-thumb-bg: #64748B;
+  --scrollbar-thumb-bg: #2F3759;
+  --scrollbar-active-thumb-bg: #475569;
+
+  /* ---- 阴影 ---- */
+  --shadow-s: 0 1px 2px 0 rgba(0, 0, 0, 0.45);
+  --shadow-m:
+    0 2px 8px -1px rgba(0, 0, 0, 0.40),
+    0 8px 24px -4px rgba(0, 0, 0, 0.45);
+  --shadow-l:
+    0 4px 12px -2px rgba(0, 0, 0, 0.50),
+    0 16px 40px -6px rgba(0, 0, 0, 0.55);
 }
 
-/* ============================================
-   中文排版优化
-   ============================================ */
+/* ============================================================
+   3. 全局字体
+   ============================================================ */
 
-/* 全局字体 */
 body {
-  font-family: "Inter", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-text-theme:
+    "Inter", "Inter Variable", "Noto Sans SC", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+
+  --font-monospace-theme:
+    "JetBrains Mono", "Fira Code", "SF Mono", ui-monospace,
+    "Cascadia Code", "Noto Sans Mono CJK SC",
+    Menlo, Monaco, Consolas, monospace;
+
+  --font-interface-theme:
+    "Inter", "Inter Variable", "Noto Sans SC", "PingFang SC",
+    system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  font-feature-settings: "cv11", "ss01", "ss03", "calt" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* 正文字间距 */
+/* ============================================================
+   4. 中文长文排版
+   ============================================================ */
+
 .markdown-preview-view p,
-.markdown-source-view .cm-content {
-  letter-spacing: 0.02em;
-  line-height: 1.75;
+.markdown-source-view.mod-cm6 .cm-content {
+  letter-spacing: 0.012em;
+  line-height: 1.78;
 }
 
-/* 标题优化 */
+.markdown-preview-view p {
+  margin: 0 0 1.25em;
+  color: var(--text-normal);
+}
+
+.markdown-preview-view ul,
+.markdown-preview-view ol {
+  padding-left: 1.4em;
+  margin: 1em 0 1.25em;
+}
+
+.markdown-preview-view li + li {
+  margin-top: 0.4em;
+}
+
+.markdown-preview-view ul > li::marker,
+.markdown-preview-view ol > li::marker {
+  color: var(--text-faint);
+}
+
+/* ============================================================
+   5. 标题
+   ============================================================ */
+
 .markdown-preview-view h1 {
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  font-weight: 700;
+  font-size: 2.2em;
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.14;
+  margin: 0 0 1rem;
+  color: var(--text-normal);
 }
 
 .markdown-preview-view h2 {
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-  font-weight: 600;
+  font-size: 1.55em;
+  font-weight: 700;
+  letter-spacing: -0.014em;
+  line-height: 1.28;
+  margin-top: 2.4rem;
+  padding-top: 1.2rem;
+  padding-bottom: 0.4rem;
+  border-top: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
 }
 
 .markdown-preview-view h3 {
+  font-size: 1.2em;
+  font-weight: 700;
+  letter-spacing: -0.018em;
   line-height: 1.4;
-  font-weight: 600;
+  margin-top: 2rem;
+  color: var(--text-normal);
 }
 
 .markdown-preview-view h4 {
-  line-height: 1.5;
+  font-size: 1.05em;
   font-weight: 600;
-}
-
-/* 列表项间距 */
-.markdown-preview-view ul > li,
-.markdown-preview-view ol > li {
-  margin-bottom: 0.25em;
-}
-
-/* ============================================
-   代码块样式
-   ============================================ */
-
-/* 内联代码 */
-.markdown-preview-view code:not(pre code),
-.markdown-source-view .cm-inline-code {
-  font-family: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
-  background-color: var(--background-secondary-alt);
+  margin-top: 1.5rem;
   color: var(--text-normal);
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
-  font-size: 0.875em;
-  border: 1px solid var(--background-modifier-border);
 }
 
-/* 代码块 */
-.markdown-preview-view pre {
+.markdown-preview-view h5,
+.markdown-preview-view h6 {
+  font-size: 0.96em;
+  font-weight: 600;
+  margin-top: 1.3rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   6. 强调 / 引用块
+   ============================================================ */
+
+.markdown-preview-view strong,
+.markdown-preview-view b {
+  font-weight: 700;
+  color: var(--text-normal);
+}
+
+.markdown-preview-view blockquote {
+  margin: 1.4rem 0;
+  padding: 0.65rem 1.2rem;
+  border-left: 4px solid var(--interactive-accent);
+  background: var(--background-secondary);
+  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  color: var(--text-muted);
+}
+
+.markdown-preview-view blockquote p {
+  margin: 0.4em 0;
+}
+
+/* ============================================================
+   7. 内联代码 / 代码块
+   ============================================================ */
+
+/* 内联代码 — 与 VitePress 风格一致：品牌色软底 */
+.markdown-preview-view code:not(pre code),
+.markdown-source-view.mod-cm6 .cm-inline-code,
+.cm-s-obsidian span.cm-inline-code {
+  background-color: rgba(99, 102, 241, 0.10);
+  color: var(--interactive-accent);
+  padding: 0.15em 0.45em;
+  border-radius: var(--radius-s);
+  font-size: 0.86em;
+  font-weight: 500;
+  font-family: var(--font-monospace-theme);
+  border: none;
+  font-feature-settings: "liga" 0;
+}
+
+.theme-dark .markdown-preview-view code:not(pre code),
+.theme-dark .markdown-source-view.mod-cm6 .cm-inline-code,
+.theme-dark .cm-s-obsidian span.cm-inline-code {
+  background-color: rgba(129, 140, 248, 0.16);
+  color: var(--interactive-accent);
+}
+
+/* 代码块容器 */
+.markdown-preview-view pre,
+.markdown-source-view.mod-cm6 .HyperMD-codeblock-bg {
   background-color: var(--background-secondary-alt);
-  border-radius: 8px;
+  border-radius: var(--radius-m);
   border: 1px solid var(--background-modifier-border);
-  padding: 1rem;
+  padding: 1.1rem 1.2rem;
+  box-shadow: var(--shadow-s);
 }
 
 .markdown-preview-view pre code {
-  font-family: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
+  font-family: var(--font-monospace-theme);
   font-size: 0.875rem;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-feature-settings: "liga" 0;
 }
 
-/* ============================================
-   Callout 样式（与 VitePress 一致）
-   ============================================ */
+/* ============================================================
+   8. Callout — 与 VitePress 自定义容器视觉一致
+   ============================================================ */
 
 .callout {
-  border-radius: 8px;
+  border-radius: var(--radius-m);
   border-left-width: 4px;
+  border-style: solid;
+  margin: 1.4rem 0;
+  padding: 0.85rem 1rem;
+  background: var(--callout-color, var(--background-secondary));
 }
 
-.callout[data-callout="info"] {
-  background-color: rgba(37, 99, 235, 0.08);
-  border-color: #2563EB;
+.callout-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0;
 }
 
-.callout[data-callout="tip"] {
-  background-color: rgba(5, 150, 105, 0.08);
-  border-color: #059669;
+.callout-content {
+  margin-top: 0.4rem;
+  line-height: 1.7;
 }
 
-.callout[data-callout="warning"] {
-  background-color: rgba(217, 119, 6, 0.08);
-  border-color: #D97706;
+/* INFO / NOTE — 品牌色 */
+.callout[data-callout="info"],
+.callout[data-callout="note"] {
+  --callout-color: rgba(99, 102, 241, 0.10);
+  border-color: #6366F1;
+  color: #4F46E5;
 }
 
-.callout[data-callout="danger"] {
-  background-color: rgba(220, 38, 38, 0.08);
-  border-color: #DC2626;
+.theme-dark .callout[data-callout="info"],
+.theme-dark .callout[data-callout="note"] {
+  --callout-color: rgba(129, 140, 248, 0.16);
+  border-color: #A5B4FC;
+  color: #A5B4FC;
 }
 
-.theme-dark .callout[data-callout="info"] {
-  background-color: rgba(96, 165, 250, 0.12);
-  border-color: #60A5FA;
+/* TIP / SUCCESS */
+.callout[data-callout="tip"],
+.callout[data-callout="success"],
+.callout[data-callout="check"],
+.callout[data-callout="done"] {
+  --callout-color: rgba(16, 185, 129, 0.10);
+  border-color: #10B981;
+  color: #047857;
 }
 
-.theme-dark .callout[data-callout="tip"] {
-  background-color: rgba(52, 211, 153, 0.12);
+.theme-dark .callout[data-callout="tip"],
+.theme-dark .callout[data-callout="success"],
+.theme-dark .callout[data-callout="check"],
+.theme-dark .callout[data-callout="done"] {
+  --callout-color: rgba(52, 211, 153, 0.16);
   border-color: #34D399;
+  color: #34D399;
 }
 
-.theme-dark .callout[data-callout="warning"] {
-  background-color: rgba(251, 191, 36, 0.12);
-  border-color: #FBBF24;
+/* WARNING / CAUTION */
+.callout[data-callout="warning"],
+.callout[data-callout="caution"],
+.callout[data-callout="attention"] {
+  --callout-color: rgba(217, 119, 6, 0.10);
+  border-color: #F59E0B;
+  color: #B45309;
 }
 
-.theme-dark .callout[data-callout="danger"] {
-  background-color: rgba(248, 113, 113, 0.12);
-  border-color: #F87171;
+.theme-dark .callout[data-callout="warning"],
+.theme-dark .callout[data-callout="caution"],
+.theme-dark .callout[data-callout="attention"] {
+  --callout-color: rgba(251, 191, 36, 0.16);
+  border-color: #FCD34D;
+  color: #FCD34D;
 }
 
-/* ============================================
-   表格样式
-   ============================================ */
+/* DANGER / ERROR / FAILURE */
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="failure"],
+.callout[data-callout="bug"] {
+  --callout-color: rgba(225, 29, 72, 0.10);
+  border-color: #F43F5E;
+  color: #BE123C;
+}
+
+.theme-dark .callout[data-callout="danger"],
+.theme-dark .callout[data-callout="error"],
+.theme-dark .callout[data-callout="failure"],
+.theme-dark .callout[data-callout="bug"] {
+  --callout-color: rgba(251, 113, 133, 0.16);
+  border-color: #FB7185;
+  color: #FB7185;
+}
+
+/* IMPORTANT / QUESTION / ABSTRACT (purple) */
+.callout[data-callout="important"],
+.callout[data-callout="question"],
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"],
+.callout[data-callout="tldr"],
+.callout[data-callout="example"] {
+  --callout-color: rgba(139, 92, 246, 0.10);
+  border-color: #A78BFA;
+  color: #7C3AED;
+}
+
+.theme-dark .callout[data-callout="important"],
+.theme-dark .callout[data-callout="question"],
+.theme-dark .callout[data-callout="abstract"],
+.theme-dark .callout[data-callout="summary"],
+.theme-dark .callout[data-callout="tldr"],
+.theme-dark .callout[data-callout="example"] {
+  --callout-color: rgba(167, 139, 250, 0.16);
+  border-color: #C4B5FD;
+  color: #C4B5FD;
+}
+
+/* ============================================================
+   9. 表格
+   ============================================================ */
 
 .markdown-preview-view table {
   border-collapse: separate;
   border-spacing: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-m);
   border: 1px solid var(--background-modifier-border);
   overflow: hidden;
+  margin: 1.4rem 0;
+  box-shadow: var(--shadow-s);
+  background-color: var(--background-primary);
+  width: 100%;
+}
+
+.markdown-preview-view thead {
+  background-color: var(--background-secondary);
 }
 
 .markdown-preview-view th {
   background-color: var(--background-secondary);
-  font-weight: 600;
-  padding: 0.625rem 1rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-align: left;
+  padding: 0.7rem 1rem;
   border-bottom: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
 }
 
 .markdown-preview-view td {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   border-bottom: 1px solid var(--background-modifier-border);
+  font-size: 0.95rem;
+}
+
+.markdown-preview-view tr:nth-child(even) td {
+  background-color: var(--background-secondary);
+}
+
+.markdown-preview-view tbody tr:hover td {
+  background-color: var(--background-modifier-hover);
 }
 
 .markdown-preview-view tr:last-child td {
   border-bottom: none;
 }
 
-/* ============================================
-   链接样式
-   ============================================ */
+/* ============================================================
+   10. 链接 / Wiki 链接
+   ============================================================ */
 
 .markdown-preview-view a {
+  color: var(--text-accent);
+  font-weight: 500;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
+  background-image: linear-gradient(
+    transparent calc(100% - 1px),
+    var(--interactive-accent) calc(100% - 1px)
+  );
+  background-repeat: no-repeat;
+  background-size: 0 100%;
+  transition:
+    background-size 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 220ms;
 }
 
 .markdown-preview-view a:hover {
-  border-bottom-color: var(--text-accent);
+  color: var(--text-accent-hover);
+  background-size: 100% 100%;
 }
 
-/* Wiki 链接 */
+/* Obsidian 内部 Wiki 链接 */
 .markdown-preview-view .internal-link {
   color: var(--text-accent);
   font-weight: 500;
+  background-image: none;
+  border-bottom: 1px dashed var(--interactive-accent);
+  padding-bottom: 1px;
+  transition: all 200ms;
 }
 
+.markdown-preview-view .internal-link:hover {
+  color: var(--text-accent-hover);
+  border-bottom-color: var(--text-accent);
+  border-bottom-style: solid;
+}
+
+/* 未解析的链接 */
 .markdown-preview-view .internal-link.is-unresolved {
   color: var(--text-faint);
-  opacity: 0.7;
+  opacity: 0.65;
+  border-bottom-color: var(--text-faint);
 }
 
-/* ============================================
-   侧边栏优化
-   ============================================ */
+/* 标签 #tag */
+.markdown-preview-view .tag,
+.cm-s-obsidian .cm-hashtag {
+  background-color: rgba(99, 102, 241, 0.10);
+  color: var(--interactive-accent);
+  padding: 0.1em 0.5em;
+  border-radius: 999px;
+  font-size: 0.82em;
+  font-weight: 500;
+  border: none;
+  text-decoration: none;
+}
 
-/* 文件树 */
+.theme-dark .markdown-preview-view .tag,
+.theme-dark .cm-s-obsidian .cm-hashtag {
+  background-color: rgba(129, 140, 248, 0.16);
+}
+
+/* ============================================================
+   11. 文件树（左侧栏）
+   ============================================================ */
+
+.workspace-leaf-content[data-type="file-explorer"] {
+  font-size: 0.92rem;
+}
+
 .nav-folder-title,
 .nav-file-title {
-  font-size: 0.875rem;
+  font-size: 0.88rem;
+  border-radius: var(--radius-s);
+  padding: 0.25rem 0.5rem;
+  transition: background-color 140ms, color 140ms;
+}
+
+.nav-folder-title:hover,
+.nav-file-title:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--interactive-accent);
 }
 
 .nav-file-title.is-active {
+  background-color: var(--background-modifier-active-hover);
   color: var(--interactive-accent);
   font-weight: 600;
-  background-color: var(--background-secondary-alt);
 }
 
-/* ============================================
-   图谱视图（Graph View）
-   ============================================ */
+.nav-folder-title-content {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* ============================================================
+   12. 标签页 / 工作区
+   ============================================================ */
+
+.workspace-tab-header {
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+}
+
+.workspace-tab-header.is-active {
+  background-color: var(--background-primary);
+  border-bottom: 2px solid var(--interactive-accent);
+}
+
+.workspace-tab-header-inner-title {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  color: var(--text-normal);
+  font-weight: 600;
+}
+
+/* ============================================================
+   13. 图谱视图（Graph View）
+   ============================================================ */
 
 .graph-view.color-fill {
   color: var(--text-normal);
@@ -303,4 +619,132 @@ body {
 .graph-view.color-line-highlight {
   color: var(--interactive-accent);
   opacity: 0.5;
+}
+
+.graph-view.color-fill-focused {
+  color: var(--interactive-accent);
+}
+
+.graph-view.color-fill-tag {
+  color: #A78BFA;
+}
+
+/* ============================================================
+   14. 按钮 / 输入框
+   ============================================================ */
+
+button:not(.clickable-icon),
+.mod-cta {
+  border-radius: var(--radius-s);
+  font-weight: 500;
+  transition:
+    background-color 200ms,
+    color 200ms,
+    border-color 200ms,
+    transform 140ms;
+}
+
+button.mod-cta,
+.mod-cta {
+  background: linear-gradient(120deg, #4F46E5 0%, #7C3AED 100%);
+  color: #FFFFFF;
+  border: none;
+  box-shadow: 0 8px 24px -8px rgba(99, 102, 241, 0.35);
+}
+
+button.mod-cta:hover,
+.mod-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px -6px rgba(99, 102, 241, 0.55);
+}
+
+.theme-dark button.mod-cta,
+.theme-dark .mod-cta {
+  background: linear-gradient(120deg, #818CF8 0%, #A78BFA 100%);
+  color: #0B0F1A;
+  box-shadow: 0 10px 32px -8px rgba(129, 140, 248, 0.55);
+}
+
+input[type="text"],
+input[type="search"],
+textarea,
+.cm-s-obsidian .CodeMirror-line {
+  border-radius: var(--radius-s);
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+}
+
+.theme-dark input[type="text"]:focus,
+.theme-dark input[type="search"]:focus {
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.30);
+}
+
+/* ============================================================
+   15. 滚动条美化
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-bg);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-active-thumb-bg);
+}
+
+/* ============================================================
+   16. 状态栏
+   ============================================================ */
+
+.status-bar {
+  background-color: var(--background-secondary);
+  border-top: 1px solid var(--background-modifier-border);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+.status-bar-item {
+  padding: 0 0.6rem;
+}
+
+/* ============================================================
+   17. 命令面板 / 模态框
+   ============================================================ */
+
+.modal,
+.suggestion-container,
+.prompt {
+  border-radius: var(--radius-l);
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: var(--shadow-l);
+}
+
+.suggestion-item.is-selected,
+.prompt-results .is-selected {
+  background-color: var(--background-modifier-hover);
+  color: var(--interactive-accent);
+}
+
+/* ============================================================
+   18. 选区高亮
+   ============================================================ */
+
+::selection {
+  background-color: var(--text-selection);
+  color: var(--text-normal);
 }
